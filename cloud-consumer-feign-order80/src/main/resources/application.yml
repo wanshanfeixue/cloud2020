@@ -1,0 +1,25 @@
+server:
+  port: 80
+spring:
+  application:
+    name: cloud-orderfeign-service
+eureka:
+  client:
+    fetch-registry: true  #表示是否从EurekaServer抓取已有的注册服务，默认为true，单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    register-with-eureka: true #true表示自己将注册进EurekaServer 默认为true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka/  #单机版
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/  #集群版
+  instance:
+    instance-id: order80  #修改主机id
+    prefer-ip-address: true  #访问路径可以显示IP信息
+#设置feign客户端超时时间（OpenFeign默认支持ribbon)
+ribbon:
+  # 指的是建立连接所用的时间,适用于网络状态正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  # 指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+logging:
+  level:
+    #feign日志以什么级别监控哪个接口
+    com.edian.springcloud.service.PaymentService: debug

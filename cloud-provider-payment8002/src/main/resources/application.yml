@@ -1,0 +1,29 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://localhost:3306/cloudtest?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+eureka:
+  client:
+    fetch-registry: true  #表示是否从EurekaServer抓取已有的注册服务，默认为true，单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    register-with-eureka: true #true表示自己将注册进EurekaServer 默认为true
+    service-url:
+      #defaultZone: http://localhost:7001/eureka/  #单机版
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/  #集群版
+  instance:
+    instance-id: payment8002  #修改主机id
+    prefer-ip-address: true  #访问路径可以显示IP信息
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.edian.springcloud.entities  #所有Entity别名类所在的包
+
+logging:
+  level:
+    com.edian.springcloud.dao.PaymentDao: debug
